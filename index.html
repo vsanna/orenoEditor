@@ -280,6 +280,31 @@ $(function(){
       $('#hogeinner').stop(true).animate({"left":'-500px'},700);
     });
   });
+  
+  //keyconfig
+  $(function(){
+    $(window).keydown(function(e){
+      if(event.ctrlKey){
+        switch(e.keyCode){
+          case 68: //ctl + d => 削除
+            if(confirm('タイトル/ボディを全て削除しますか?')){
+                $('#bodyeditor').val('');
+                $('#bodyresult').html('');
+                $('#titleeditor').val('');
+                $('#titleresult h1').text('');
+            }
+            break;
+          case 13://ctrl+enter => textarea移動
+            if(document.activeElement.id == "titleeditor"){
+              $('#bodyeditor').focus();
+            }else if(document.activeElement.id == "bodyeditor"){
+              $('#titleeditor').focus();
+            }
+            return false;
+        };
+      };    
+    });
+  });
 
   </script>
   </body>
