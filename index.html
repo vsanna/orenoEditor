@@ -126,6 +126,10 @@
         margin: 20px 0 10px 0;
         text-align: center;
         }
+      textarea#bodyeditor::-webkit-input-placeholder::after {
+          display: block;
+          content: "keyconfig \A ctrl+d : タイトル/ボディの削除 \A ctrl + enter : テキストボックスの移動";
+        }
     </style>
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -145,7 +149,7 @@
         <div class="col-md-6 col-sm-6 editwrap">
           <div class="edit">
             <textarea id="titleeditor" class="form-control" placeholder="タイトル。#なしでOKです。"></textarea>
-            <textarea id="bodyeditor" class="form-control" placeholder="本文。markdownで書いて下さい。\n keyconfig \n ctrl+d : タイトル/ボディの削除 \n ctrl + enter : テキストボックスの移動"></textarea>
+            <textarea id="bodyeditor" class="form-control" placeholder="本文。markdownで書いて下さい。"></textarea>
             <button class="btn dl">htmlをDL</button><br>
             <textarea id="result2" rows="3"></textarea>
             <div class="footer"> ©2015 <a href="http://vsanna.sakura.ne.jp/wp/2015/01/orenoeditor/" target="_blank">vsanna</a></div>
