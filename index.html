@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <script src="vender/jquery-1.11.2.min.js"></script>
+    <script src="vender/marked.min.js"></script>
+    <script src="vender/highlight.pack.js"></script>
+    <link rel="stylesheet" href="vender/bootstrap.min.css" />
+    <link rel="stylesheet" href="vender/github-markdown.css" />
+    <link rel="stylesheet" href="vender/github.css" />
+
+    <style>
+      body, textarea{
+        font-family: YuGothic, "游ゴシック体", "Yu Gothic", san-serif;
+      }
+      textarea {
+        resize: vertical;
+        font-family: Consolas, 'Courier New', Courier, Monaco, monospace;
+        font-size: 12px !important;
+        box-shadow: none !important;
+        margin-bottom: 5px;
+      }
+      #titleeditor{
+        height:30px;
+        border:none;
+        border-top: 1px solid rgba(100,100,100,0.3);
+        border-radius: 0;
+      }
+      #bodyeditor{
+        height: 270px;
+        border:none;
+        border-top: 1px solid rgba(100,100,100,0.3);
+        border-bottom: 1px solid rgba(100,100,100,0.3);
+        border-radius: 0;
+      }
+      #result2{
+        display:none;
+        width: 100%;
+      }
+      .resultarea{
+        border-left: 1px solid rgba(100,100,100,0.1)
+      }
+      #pageTitle{
+        font-size: 40px;
+
+      }
+      .editwrap{ 
+        margin-top: 40px;
+      }
+
+      .dl{
+        margin-top:10px;
+      }
+
+      @media(min-width:991px){
+      #pageTitle{
+        position: fixed;
+        top: 0;
+      }
+        .editwrap{
+          position: relative;
+        }
+        .edit{
+          position: fixed;
+        }
+        #editor, #bodyeditor, #titleeditor{
+          width: 300%
+        }
+        #result2{
+          width: 300%;
+          height: 20px;
+        }
+      }
+
+      #menuwrap{
+        display:none;
+        position: fixed;
+        z-index: 1;
+        left: 0%;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(180,180,180,0.9);
+        border-radius: 5px;
+      }
+      .menu{
+        height: 100%;
+        width: 100%;  
+        position:relative;
+      }
+      .menuContainer{
+        position: absolute;
+        left: 33%;
+        top: 33%;
+        width: 33%;
+        height: 33%;  
+      }
+      button.closebtn{
+        background-color: rgb(150,150,150) !important;
+        position: absolute;
+        right: 0;
+      }
+      #hoge{
+        position: relative;
+/*        display: none;
+        z-index: :2;
+        width: 2000px;
+        height: 2000px;
+        background-color: rgba(180,180,180,0.3);*/
+      }
+      div#hogeinner{
+        position: absolute;
+        left:-500px;
+        top: -30px;
+        background-color: rgba(10,10,100,0.8);
+        z-index: 1;
+        width: 300px;
+        height: 1000px;
+        color:white;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1 id="pageTitle">俺のediter</h1>
+      <div class="row">
+        <div class="col-md-6 col-sm-6 editwrap">
+          <div class="edit">
+            <textarea id="titleeditor" class="form-control" placeholder="タイトル。#なしでOKです。"></textarea>
+            <textarea id="bodyeditor" class="form-control" placeholder="本文。markdownで書いて下さい。"></textarea>
+            <button class="btn dl">htmlをDL</button><br>
+            <textarea id="result2" rows="3"></textarea>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-6 resultarea">
+          <div id="titleresult"><h1></h1></div>
+          <div id="bodyresult"></div>
+        </div>
+      </div>
+    </div>
+
+
+<script type="text/javascript">
+//読み込み時にlocalstorageからbody読み込み
+$(function(){
+    marked.setOptions({
+        langPrefix: ''
+    });
+    var l = localStorage;
+    if(l.getItem('body')!=null){
+    var src = l.getItem('body');
+    var html = marked(src);
+    $('#bodyresult').html(html);
+    $('#titleresult h1').text(l.getItem('title'));
+    $('textarea#titleeditor').val(l.getItem('title'));
+    $('textarea#bodyeditor').val(l.getItem('body'));
+    $('#result2').val(html);
+    }
+
+
+
+});
+
+//localStorageにkeyupで保存
+$(function(){
+  var l = localStorage;
+  $('textarea#titleeditor').keyup(function(){
+    l.setItem("title",$(this).val());
+  });
+  $('textarea#bodyeditor').keyup(function(){
+    l.setItem("body",$(this).val());
+  });
+});
+
+
+//editorそれぞれの¥反映=========================
+//#titleeditor用==================
+  $(function() {//markdownのパーサー。リアルタイムにレンダリングしてresultへ。ついでにhighlight
+    marked.setOptions({
+        langPrefix: ''
+    });
+    $('#titleeditor').keyup(function() {
+        var src = $(this).val();
+        $('#titleresult h1').text(src);
+        $('#result2').val(html);  
+        $('pre code').each(function(i, block) {
+            hljs.highlightBlock(block);
+        });
+    });
+  });
+
+//#titletitleeditorここまで==================
+//#bodytitleeditor用==================
+  $(function() {//markdownのパーサー。リアルタイムにレンダリングしてresultへ。ついでにhighlight
+    marked.setOptions({
+        langPrefix: ''
+    });
+    $('#bodyeditor').keyup(function() {
+        var src = $(this).val();
+
+        var html = marked(src);
+        $('#bodyresult').html(html);
+        $('#result2').val(html);
+
+        $('pre code').each(function(i, block) {
+            hljs.highlightBlock(block);
+        });
+    });
+  });
+//#bodybodyeditorここまで==================
+//editorそれぞれの¥反映ここまで=========================
+
+  $(function(){//tabでインデント
+    $('textarea').keydown(function(e){
+      if(e.keyCode == 9){
+        e.preventDefault();
+        var elem = e.target;
+        var val = elem.value;
+        var pos = elem.selectionStart;
+        elem.value = val.substr(0, pos) + '  ' + val.substr(pos, val.length);
+          //2スペース右へ
+        elem.setSelectionRange(pos + 2, pos + 2);
+          //カーソル位置も(無選択でも選択ありでも)右2ますへ
+      }
+    })
+  });
+
+
+//htmlダウンロード
+  $(function(){
+    $('.dl').click(function(){
+      $('#result2').toggle(700).select();
+    });
+  });
+
+// 左上から飛び出すmenu
+  $(function(){
+    $('button.open, button.closebtn').click(function(){
+      $('#menuwrap').toggle(500);
+    });
+  });
+
+//左から入っているmenuの実装
+  $(function(){
+    $('.list').click(function(){
+      // $('#hoge').toggle();
+      if($(this).hasClass('topclose')){
+        $(this).removeClass('topclose');
+        $('#hogeinner').stop(true).animate({"left":'-500px'},700);
+      }else{
+        $(this).addClass('topclose');
+        $('#hogeinner').stop(true).animate({"left":'-30px'},700);
+      }
+    });
+
+    $('.hogeclose').click(function() {
+      /* Act on the event */
+      // $('#hoge').toggle();
+      $('.list').removeClass("topclose");
+      $('#hogeinner').stop(true).animate({"left":'-500px'},700);
+    });
+  });
+
+  </script>
+  </body>
+</html>
