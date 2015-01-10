@@ -202,7 +202,6 @@ $(function(){
     $('#titleeditor').keyup(function() {
         var src = $(this).val();
         $('#titleresult h1').text(src);
-        $('#result2').val(html);  
         $('pre code').each(function(i, block) {
             hljs.highlightBlock(block);
         });
@@ -217,11 +216,9 @@ $(function(){
     });
     $('#bodyeditor').keyup(function() {
         var src = $(this).val();
-
         var html = marked(src);
         $('#bodyresult').html(html);
         $('#result2').val(html);
-
         $('pre code').each(function(i, block) {
             hljs.highlightBlock(block);
         });
