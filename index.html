@@ -175,14 +175,14 @@ $(function(){
     var src = l.getItem('body');
     var html = marked(src);
     $('#bodyresult').html(html);
-    $('#titleresult h1').text(l.getItem('title'));
-    $('textarea#titleeditor').val(l.getItem('title'));
     $('textarea#bodyeditor').val(l.getItem('body'));
     $('#result2').val(html);
-    }
-
-
-
+    };
+    
+    if(l.getItem('title')!=null){
+    $('#titleresult h1').text(l.getItem('title'));
+    $('textarea#titleeditor').val(l.getItem('title'));
+    };
 });
 
 //localStorageにkeyupで保存
