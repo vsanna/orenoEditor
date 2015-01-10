@@ -175,7 +175,7 @@ $(function(){
     var src = l.getItem('body');
     var html = marked(src);
     $('#bodyresult').html(html);
-    $('textarea#bodyeditor').val(l.getItem('body'));
+    $('textarea#bodyeditor').val(src);
     $('#result2').val(html);
     };
     
