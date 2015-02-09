@@ -8,7 +8,13 @@
     <link rel="stylesheet" href="vender/bootstrap.min.css" />
     <link rel="stylesheet" href="vender/github-markdown.css" />
     <link rel="stylesheet" href="vender/github.css" />
+<<<<<<< HEAD
     <title>俺のエディター</title>
+=======
+    <link rel="shortcut icon" href="favicon.ico">
+    <title>俺のエディター</title>
+
+>>>>>>> origin/gh-pages
 
     <style>
       body, textarea{
@@ -119,7 +125,27 @@
         height: 1000px;
         color:white;
       }
+      .footer {
+        display:block;
+        width:100px;
+        margin: 20px 0 10px 0;
+        text-align: center;
+        }
+      textarea#bodyeditor::-webkit-input-placeholder::after {
+          display: block;
+          content: "\A keyconfig \A ctrl + d : タイトル/ボディの削除 \A ctrl + enter : テキストボックスの移動";
+        }
     </style>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-46226800-3', 'auto');
+  ga('send', 'pageview');
+
+</script>
   </head>
   <body>
     <div class="container">
@@ -131,6 +157,8 @@
             <textarea id="bodyeditor" class="form-control" placeholder="本文。markdownで書いて下さい。"></textarea>
             <button class="btn dl">htmlをDL</button><br>
             <textarea id="result2" rows="3"></textarea>
+            <div class="footer"> ©2015 <a href="http://vsanna.sakura.ne.jp/wp/2015/01/orenoeditor/" target="_blank">vsanna</a></div>
+
           </div>
         </div>
         <div class="col-md-6 col-sm-6 resultarea">
@@ -152,14 +180,14 @@ $(function(){
     var src = l.getItem('body');
     var html = marked(src);
     $('#bodyresult').html(html);
+    $('textarea#bodyeditor').val(src);
+    $('#result2').val(html);
+    };
+    
+    if(l.getItem('title')!=null){
     $('#titleresult h1').text(l.getItem('title'));
     $('textarea#titleeditor').val(l.getItem('title'));
-    $('textarea#bodyeditor').val(l.getItem('body'));
-    $('#result2').val(html);
-    }
-
-
-
+    };
 });
 
 //localStorageにkeyupで保存
@@ -183,7 +211,6 @@ $(function(){
     $('#titleeditor').keyup(function() {
         var src = $(this).val();
         $('#titleresult h1').text(src);
-        $('#result2').val(html);  
         $('pre code').each(function(i, block) {
             hljs.highlightBlock(block);
         });
@@ -198,11 +225,9 @@ $(function(){
     });
     $('#bodyeditor').keyup(function() {
         var src = $(this).val();
-
         var html = marked(src);
         $('#bodyresult').html(html);
         $('#result2').val(html);
-
         $('pre code').each(function(i, block) {
             hljs.highlightBlock(block);
         });
@@ -259,6 +284,31 @@ $(function(){
       // $('#hoge').toggle();
       $('.list').removeClass("topclose");
       $('#hogeinner').stop(true).animate({"left":'-500px'},700);
+    });
+  });
+  
+  //keyconfig
+  $(function(){
+    $(window).keydown(function(e){
+      if(event.ctrlKey){
+        switch(e.keyCode){
+          case 68: //ctl + d => 削除
+            if(confirm('タイトル/ボディを全て削除しますか?')){
+                $('#bodyeditor').val('');
+                $('#bodyresult').html('');
+                $('#titleeditor').val('');
+                $('#titleresult h1').text('');
+            }
+            break;
+          case 13://ctrl+enter => textarea移動
+            if(document.activeElement.id == "titleeditor"){
+              $('#bodyeditor').focus();
+            }else if(document.activeElement.id == "bodyeditor"){
+              $('#titleeditor').focus();
+            }
+            return false;
+        };
+      };    
     });
   });
 
