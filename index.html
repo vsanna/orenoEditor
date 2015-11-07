@@ -8,13 +8,8 @@
     <link rel="stylesheet" href="vender/bootstrap.min.css" />
     <link rel="stylesheet" href="vender/github-markdown.css" />
     <link rel="stylesheet" href="vender/github.css" />
-<<<<<<< HEAD
-    <title>俺のエディター</title>
-=======
     <link rel="shortcut icon" href="favicon.ico">
     <title>俺のエディター</title>
-
->>>>>>> origin/gh-pages
 
     <style>
       body, textarea{
@@ -51,7 +46,7 @@
         font-size: 40px;
 
       }
-      .editwrap{ 
+      .editwrap{
         margin-top: 40px;
       }
 
@@ -92,7 +87,7 @@
       }
       .menu{
         height: 100%;
-        width: 100%;  
+        width: 100%;
         position:relative;
       }
       .menuContainer{
@@ -100,7 +95,7 @@
         left: 33%;
         top: 33%;
         width: 33%;
-        height: 33%;  
+        height: 33%;
       }
       button.closebtn{
         background-color: rgb(150,150,150) !important;
@@ -183,7 +178,7 @@ $(function(){
     $('textarea#bodyeditor').val(src);
     $('#result2').val(html);
     };
-    
+
     if(l.getItem('title')!=null){
     $('#titleresult h1').text(l.getItem('title'));
     $('textarea#titleeditor').val(l.getItem('title'));
@@ -286,7 +281,7 @@ $(function(){
       $('#hogeinner').stop(true).animate({"left":'-500px'},700);
     });
   });
-  
+
   //keyconfig
   $(function(){
     $(window).keydown(function(e){
@@ -308,7 +303,7 @@ $(function(){
             }
             return false;
         };
-      };    
+      };
     });
   });
 
@@ -332,7 +327,7 @@ $(function(){
             }
             return false;
         };
-      };    
+      };
     });
   });
   </script>
